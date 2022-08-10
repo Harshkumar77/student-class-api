@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.studentSchema = void 0;
 var mongoose_1 = __importDefault(require("mongoose"));
+var Date_1 = require("../utils/Date");
 exports.studentSchema = new mongoose_1["default"].Schema({
     name: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
@@ -12,6 +13,10 @@ exports.studentSchema = new mongoose_1["default"].Schema({
     accountCreated: {
         type: Date,
         "default": Date.now()
+    },
+    expirationDate: {
+        type: Date,
+        "default": (0, Date_1.expirationDate)()
     },
     studentId: { type: String, required: true },
     marks: {
@@ -26,6 +31,15 @@ exports.studentSchema = new mongoose_1["default"].Schema({
         type: Number,
         required: true
     }
+});
+exports.studentSchema.virtual("apiResponse").get(function () {
+    return {
+        name: this.name,
+        studentId: this.studentId,
+        rollNumber: this.rollNumber,
+        marks: this.marks,
+        dob: this.dateOfBirth
+    };
 });
 var Student = mongoose_1["default"].model("Student", exports.studentSchema);
 exports["default"] = Student;

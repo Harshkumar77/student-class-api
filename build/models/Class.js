@@ -36,6 +36,36 @@ exports.classSchema = new mongoose_1["default"].Schema({
         required: true
     }
 });
+exports.classSchema.virtual("newClassApiResponse").get(function () {
+    return {
+        name: this.name,
+        year: this.year,
+        classTeacher: this.classTeacher,
+        subjects: this.subjects,
+        classCode: this.classCode
+    };
+});
+exports.classSchema.virtual("existingClassApiResponse").get(function () {
+    return {
+        name: this.name,
+        year: this.year,
+        classTeacher: this.classTeacher,
+        subjects: this.subjects,
+        classCode: this.classCode,
+        totalStudents: this.totalStudents,
+        students: this.students.map(function (student) { return student.apiResponse; })
+    };
+});
+exports.classSchema.virtual("miniClassApiResponse").get(function () {
+    return {
+        name: this.name,
+        year: this.year,
+        classTeacher: this.classTeacher,
+        subjects: this.subjects,
+        classCode: this.classCode,
+        totalStudents: this.totalStudents
+    };
+});
 var Class = mongoose_1["default"].model("Class", exports.classSchema);
 exports["default"] = Class;
 //# sourceMappingURL=Class.js.map

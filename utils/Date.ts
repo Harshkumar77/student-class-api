@@ -15,3 +15,9 @@ export function dateIsValid(dateStr: string) {
 
   return date.toISOString().startsWith(dateStr)
 }
+
+export function expirationDate() {
+  const today = new Date()
+  const thirty_days_from_now = new Date().setDate(today.getDate() + 30)
+  return thirty_days_from_now
+}

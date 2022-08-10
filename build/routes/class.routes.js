@@ -43,25 +43,31 @@ var express_1 = require("express");
 var Class_1 = __importDefault(require("../models/Class"));
 var classRouter = (0, express_1.Router)();
 classRouter.post("/api/class", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newClass;
+    var oldClass, newClass;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, Class_1["default"].create(req.body)];
+            case 0: return [4 /*yield*/, Class_1["default"].findOne({ name: req.body.name })];
             case 1:
+                oldClass = _a.sent();
+                if (oldClass)
+                    return [2 /*return*/, res.status(400).send({ message: "This class name is already taken" })];
+                return [4 /*yield*/, Class_1["default"].create(req.body)];
+            case 2:
                 newClass = _a.sent();
-                res.status(201).send(newClass);
+                res.status(201).send(newClass.newClassApiResponse);
                 return [2 /*return*/];
         }
     });
 }); });
 classRouter.get("/api/classes", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var classes;
+    var classes, apiResponse;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Class_1["default"].find({})];
             case 1:
                 classes = _a.sent();
-                res.send(classes);
+                apiResponse = classes.map(function (_class) { return _class.miniClassApiResponse; });
+                res.send(apiResponse);
                 return [2 /*return*/];
         }
     });
@@ -77,7 +83,7 @@ classRouter.get("/api/class/:name", function (req, res) { return __awaiter(void 
                     return [2 /*return*/, res.status(400).send({
                             message: "Incorrect class Name"
                         })];
-                res.send(_class);
+                res.send(_class.existingClassApiResponse);
                 return [2 /*return*/];
         }
     });

@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { expirationDate } from "../utils/Date"
 import Class from "./Class"
 
 export const studentSchema = new mongoose.Schema({
@@ -8,6 +9,10 @@ export const studentSchema = new mongoose.Schema({
   accountCreated: {
     type: Date,
     default: Date.now(),
+  },
+  expirationDate : {
+    type : Date ,
+    default : expirationDate()
   },
   studentId: { type: String, required: true },
   marks : {
@@ -21,6 +26,16 @@ export const studentSchema = new mongoose.Schema({
   rollNumber : {
     type : Number,
     required : true
+  }
+})
+
+studentSchema.virtual("apiResponse").get(function() {
+  return {
+    name : this.name,
+    studentId : this.studentId,
+    rollNumber : this.rollNumber,
+    marks : this.marks,
+    dob : this.dateOfBirth
   }
 })
 

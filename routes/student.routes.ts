@@ -34,7 +34,13 @@ studentRouter.post("/api/student", async (req, res) => {
     password: await hash(req.body.password, 4),
     marks,
   })
-  res.status(201).send(newStudent)
+  // const apiResponse = {
+  //   name: newStudent.name,
+  //   rollNumber: newStudent.rollNumber,
+  //   studentId: newStudent.studentId,
+  // }
+  // res.status(201).send(apiResponse)
+  res.status(201).send((newStudent as any).apiResponse)
   _class.students.push(newStudent)
   _class.save()
 })

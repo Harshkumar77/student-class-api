@@ -81,10 +81,23 @@ studentRouter.post("/api/student", function (req, res) { return __awaiter(void 0
                 return [4 /*yield*/, (0, bcrypt_1.hash)(req.body.password, 4)];
             case 2: return [4 /*yield*/, _b.apply(_a, [(_c.password = _d.sent(),
                         _c.marks = marks,
-                        _c)])];
+                        _c)])
+                // const apiResponse = {
+                //   name: newStudent.name,
+                //   rollNumber: newStudent.rollNumber,
+                //   studentId: newStudent.studentId,
+                // }
+                // res.status(201).send(apiResponse)
+            ];
             case 3:
                 newStudent = _d.sent();
-                res.status(201).send(newStudent);
+                // const apiResponse = {
+                //   name: newStudent.name,
+                //   rollNumber: newStudent.rollNumber,
+                //   studentId: newStudent.studentId,
+                // }
+                // res.status(201).send(apiResponse)
+                res.status(201).send(newStudent.apiResponse);
                 _class.students.push(newStudent);
                 _class.save();
                 return [2 /*return*/];
