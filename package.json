@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "serve": "node build/index.js",
-    "build": "npx tsc -p ."
+    "build:local": "npx tsc -p ."
   },
   "keywords": [],
   "author": "",
