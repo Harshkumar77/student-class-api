@@ -34,22 +34,15 @@ studentRouter.post("/api/student", async (req, res) => {
     password: await hash(req.body.password, 4),
     marks,
   })
-  // const apiResponse = {
-  //   name: newStudent.name,
-  //   rollNumber: newStudent.rollNumber,
-  //   studentId: newStudent.studentId,
-  // }
-  // res.status(201).send(apiResponse)
   res.status(201).send((newStudent as any).apiResponse)
   _class.students.push(newStudent)
   _class.save()
 })
 
-studentRouter.post("/api/student/activate", async (req, res) => {
-  if (!req.body.studentId || !req.body.oldPassword || !req.body.newPassword)
-    return res.status(400).send({
-      message: "Please provide old password , new password and studentId",
-    })
+studentRouter.get("/api/student/:id", async (req, res) => {
+  const student = await Student.findOne({ studentId: req.params.id })
+  if (!student) return res.status(400).send({ message: "Invalid student Id" })
+  res.send((student as any).apiResponse)
 })
 
 export default studentRouter
