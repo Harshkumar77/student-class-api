@@ -10,4 +10,8 @@ var routes_1 = __importDefault(require("./routes"));
 var app = (0, express_1["default"])();
 (0, express_config_1.configureApp)(app);
 (0, routes_1["default"])(app);
+process.on("uncaughtException", function (err) {
+    console.error(err);
+    console.log("Node NOT Exiting...");
+});
 //# sourceMappingURL=index.js.map

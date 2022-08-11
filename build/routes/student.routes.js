@@ -81,22 +81,9 @@ studentRouter.post("/api/student", function (req, res) { return __awaiter(void 0
                 return [4 /*yield*/, (0, bcrypt_1.hash)(req.body.password, 4)];
             case 2: return [4 /*yield*/, _b.apply(_a, [(_c.password = _d.sent(),
                         _c.marks = marks,
-                        _c)])
-                // const apiResponse = {
-                //   name: newStudent.name,
-                //   rollNumber: newStudent.rollNumber,
-                //   studentId: newStudent.studentId,
-                // }
-                // res.status(201).send(apiResponse)
-            ];
+                        _c)])];
             case 3:
                 newStudent = _d.sent();
-                // const apiResponse = {
-                //   name: newStudent.name,
-                //   rollNumber: newStudent.rollNumber,
-                //   studentId: newStudent.studentId,
-                // }
-                // res.status(201).send(apiResponse)
                 res.status(201).send(newStudent.apiResponse);
                 _class.students.push(newStudent);
                 _class.save();
@@ -104,13 +91,18 @@ studentRouter.post("/api/student", function (req, res) { return __awaiter(void 0
         }
     });
 }); });
-studentRouter.post("/api/student/activate", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+studentRouter.get("/api/student/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var student;
     return __generator(this, function (_a) {
-        if (!req.body.studentId || !req.body.oldPassword || !req.body.newPassword)
-            return [2 /*return*/, res.status(400).send({
-                    message: "Please provide old password , new password and studentId"
-                })];
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, Student_1["default"].findOne({ studentId: req.params.id })];
+            case 1:
+                student = _a.sent();
+                if (!student)
+                    return [2 /*return*/, res.status(400).send({ message: "Invalid student Id" })];
+                res.send(student.apiResponse);
+                return [2 /*return*/];
+        }
     });
 }); });
 exports["default"] = studentRouter;
